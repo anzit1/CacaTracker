@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.VertodasincidenciasView">
+    <Pane prefHeight="35.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
+        <Text fx:id="nombreUsuarioTxt" layoutX="418.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NombreDeUsuario" wrappingWidth="181.220703125">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Text>
+        <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Todas las incidencias">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Text>
+    </Pane>
+
+    <Pane layoutY="368.0" prefHeight="46.0" prefWidth="605.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
+        <Button fx:id="volverButton" layoutX="496.0" layoutY="7.0" mnemonicParsing="false" onAction="#volverAction" prefHeight="32.0" prefWidth="95.0" text="Volver">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Button>
+    </Pane>
+</AnchorPane>

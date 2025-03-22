@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="420.0" prefWidth="604.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.LoginpageView">
+   <Pane prefHeight="120.0" prefWidth="601.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;">
+      <children>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="199.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../imagenes/Logo.png" />
+            </image>
+            <effect>
+               <Reflection fraction="0.32" topOpacity="0.18" />
+            </effect>
+         </ImageView>
+      </children>
+   </Pane>
+   <TextField fx:id="userInput" layoutX="176.0" layoutY="166.0" prefHeight="25.0" prefWidth="250.0" promptText="Usuario">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </TextField>
+   <PasswordField fx:id="passwordInput" layoutX="176.0" layoutY="206.0" prefHeight="25.0" prefWidth="250.0" promptText="Contraseña">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </PasswordField>
+   <Text layoutX="204.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Introduce tus datos">
+      <font>
+         <Font name="Arial Black" size="18.0" />
+      </font>
+   </Text>
+   <Button fx:id="loginButton" layoutX="211.0" layoutY="253.0" mnemonicParsing="false" onAction="#loginButtonPress" prefHeight="17.0" prefWidth="180.0" text="Entrar">
+      <font>
+         <Font name="Arial Black" size="14.0" />
+      </font>
+   </Button>
+   <Button fx:id="registrarButton" layoutX="211.0" layoutY="308.0" mnemonicParsing="false" onAction="#registrarButtonPress" prefHeight="17.0" prefWidth="180.0" text="Crear nueva cuenta">
+      <font>
+         <Font name="Arial Black" size="14.0" />
+      </font>
+   </Button>
+
+   <Pane layoutX="-1.0" layoutY="374.0" prefHeight="46.0" prefWidth="605.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
+      <Button fx:id="salirButton" layoutX="496.0" layoutY="8.0" mnemonicParsing="false" onAction="#salirButtonPress" prefHeight="31.0" prefWidth="95.0" text="Salir">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </Pane>
+</AnchorPane>

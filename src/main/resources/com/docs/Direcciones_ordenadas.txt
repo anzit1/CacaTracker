@@ -1,0 +1,264 @@
+Avenida de Federico Soto,03001
+Avenida doctor Gadea,03001
+Calle Altamira,03001
+Calle Angel Lozano,03001
+Calle Antonio Galdo Chapuli,03001
+Calle Bazán,03001
+Calle Camarada Cesar Elgueza,03001
+Calle Castaños,03001
+Calle Coloma,03001
+Calle Cádiz,03001
+Calle Pascual Blanco,03001
+Calle San Fernando,03001
+Calle San Francisco,03001
+Calle Santo Tomás,03001
+Calle Teniente Álvarez Soto,03001
+Calle Valdés,03001
+Calle de San Agustín,03001
+Calle médico Pascual Pérez,03001
+Calle Álvarez Sereix,03001
+Calle Ángel Lozano,03001
+Muelle de Levante,03001
+Paseo de la Explanada de España,03001
+Playa del Postiguet,03001
+Plaza Calvo Sotelo,03001
+Plaza Gabriel Miró,03001
+Plaza Portal de Elche,03001
+Plaza Ruperto Chapí,03001
+Plaza de Calvo Sotelo,03001
+Plaza de la Muntanyeta,03001
+Plaza de los Luceros,03001
+Rambla de Méndez Núñez,03001
+Avenida Juan Bautista Lafora,03002
+Calle Argensola,03002
+Calle Bendicho,03002
+Calle Gravina,03002
+Calle San Augustin,03002
+Calle San Fernando,03002
+Calle San Telmo,03002
+Calle Villavieja,03002
+Calle Virgen del Socorro,03002
+Calle de Jorge Juan,03002
+Calle de Labradores,03002
+Calle de Muñoz,03002
+Calle de San Nicolás,03002
+Calle de Sant Nicolau,03002
+Calle lonja de los Caballeros,03002
+Paseo Mártires de la Libertad,03002
+Paseo de la Explanada de España,03002
+Plaza Paseito Ramiro,03002
+Plaza Puerta del Mar,03002
+Plaza Santisima Faz,03002
+Plaza de San Cristóbal,03002
+Plaza de la Santísima Faz,03002
+Plaza del Ayuntamiento,03002
+Plaza del Carmen,03002
+Avenida Doctor Gadea,03003
+Avenida Federico Soto,03003
+Avenida Salamanca,03003
+Avenida de Loring,03003
+Avenida de Maisonnave,03003
+Avenida doctor Gadea,03003
+Avenida estacion 5,03003
+Calle Alemania,03003
+Calle Arquitecto Morell,03003
+Calle Castellar,03003
+Calle Dr Santaolalla,03003
+Calle Italia,03003
+Calle Pintor Aparicio,03003
+Calle Pintor Lorenzo Casanova,03003
+Calle Portugal,03003
+Calle Reyes Católicos,03003
+Calle Serrano,03003
+Calle general Lacy,03003
+Calle general O'Donnell,03003
+Paseo almirante Guillén Tato,03003
+Avenida Alcalde Alfonso de Rojas,03004
+Avenida Benito Pérez Galdós,03004
+Calle Calderón de la Barca,03004
+Calle Capitán Segarra,03004
+Calle Dagniol,03004
+Calle José Gutiérrez Petén",03004
+Calle Juan de Herrera,03004
+Calle Manuel Antón,03004
+Calle Marqués de Molins,03004
+Calle Pablo Iglesias,03004
+Calle Padre Mariana,03004
+Calle Pintor Velázquez,03004
+Calle Poeta Campos Vassallo,03004
+Calle San Leandro,03004
+Calle Segura,03004
+Calle Tabarca,03004
+Calle de Botella de Hornos,03004
+Calle de Campos Vasallo,03004
+Calle del Marqués de Molins,03004
+Calle del Padre Mariana,03004
+Calle del Poeta Quintana,03004
+Calle maestro Bretón,03004
+Calle pintor Murillo,03004
+Calle pintor Velázquez,03004
+Calle poeta Quintana,03004
+Plaza Músico Óscar Tordera Iñesta,03004
+Avenida Doctor Jiménez Díaz,03005
+Avenida de la Estación,03005
+Avenida doctor Jiménez Díaz,03005
+Avenida general Marvá,03005
+Calle Callosa del Segura,03005
+Calle Cardenal Belluga,03005
+Calle Juan Ortega,03005
+Calle Padre Recaredo de los Ríos,03005
+Calle San Juan Bosco,03005
+Calle Santa Felicitas,03005
+Calle Santo Domingo,03005
+Calle de San Juan Bautista,03005
+Calle padre Recaredo de los Ríos,03005
+Avenida de Aguilera,03006
+Calle Cefeo,03006
+Calle Cruz del Sur,03006
+Calle Deportista Manuel Suárez,03006
+Calle Jaime Niñoles,03006
+Calle Lira,03006
+Calle Luis Sánchez Octavio de Toledo,03006
+Calle Princesa Mercedes,03006
+Calle Víctor de la Serna,03006
+Calle de Ausó y Monzó,03006
+Calle princesa Mercedes,03006
+Victoriano Ximenez Couder,03006
+Avenida Catedrático Soler,03007
+Avenida de Aguilera,03007
+Avenida de Neptuno,03007
+Avenida Óscar Esplá,03007
+Calle Alcalde Ramón Hernández,03007
+Calle Ana Navarro,03007
+Calle Aries,03007
+Calle Castor,03007
+Calle Catral,03007
+Calle Lliber,03007
+Calle Moratín,03007
+Calle Pardo Jimeno,03007
+Calle Perseo,03007
+Calle Poeta Pastor,03007
+Calle Polux,03007
+Calle Pérez Medina,03007
+Calle Rosa de los Vientes,03007
+Calle Río Jucar,03007
+Calle San Lorenzo,03007
+Calle Santa Cecilia,03007
+Calle Santa María Mazzarello,03007
+Calle Tomás Aznar Domenech,03007
+Calle de la Constelación,03007
+Calle de la Vega,03007
+Calle del General Bonanza,03007
+Carretera de Madrid,03007
+Carretera de Ocaña,03007
+Dársena Pesquera,03007
+Plaza Magallanes,03007
+Plaza de Florida-La Viña,03007
+Plaza del Grupo Escolar de Benalúa,03007
+Calle Alcalde José Luis Lassaleta,03008
+Calle Mexico,03008
+Calle Méjico,03008
+Calle Rosa de los Vientos,03008
+Calle catedrático Lafuente Vidal,03008
+Calle del Alcalde José Luis Lassaletta,03008
+Calle del Músico Juan Latorre Baeza,03008
+Paseo de Tomás Durá,03008
+Urbanova 1,03008
+Calle Diagonal,03009
+Calle Pintor Otilio Serrano,03009
+Calle Teulada,03009
+Calle Virgen del Puig,03009
+Calle Virgen del Rocío ,03009
+Calle isla de Cuba,03009
+Avenida de Novelda,03010
+Calle Almoradí,03010
+Calle Ceramica,03010
+Calle Claudio Coello,03010
+Calle Francisco Montero Pérez,03010
+Calle Jacinto Benavente,03010
+Calle Jaime Segarra,03010
+Calle José Reus García,03010
+Calle Nuestra Señora de los Ángeles,03010
+Calle Pardo Bazán,03010
+Calle Pedro Mas García,03010
+Calle Poeta Sansano,03010
+Calle Prosperidad,03010
+Calle Rafael Asin,03010
+Calle Rosalía de Castro,03010
+Calle Uruguay,03010
+Calle Venezuela,03010
+Calle de la prosperidad,03010
+Calle poeta Sansano,03010
+Calle del Regidor Ocaña,03011
+Calle regidor Ocaña,03011
+Calle serra Mariola,03011
+Avenida del Periodista Rodolfo Salazar,03012
+Calle Doctor Buades,03012
+Calle Pinoso,03012
+Calle San Mateo,03012
+Calle de Góngora,03012
+Avenida Padre Esplá,03013
+Calle Gonzalo Mengual,03013
+Calle Huesca,03013
+Calle Indalecio Prieto,03013
+Calle ingeniero Canales,03013
+Plaza Doctor Gomez Ulloa,03013
+Avenida maestro Alonso,03014
+Calle gran vía sidi ifni,03014
+Pasaje Nou Alacant,03014
+Avda. Periodista Rodolfo Salazar,03015
+Avenida Antonio Ramos Carratalá,03015
+Avenida del Periodista Rodolfo Salazar,03015
+Calle Bellea del foc,03015
+Calle Cuenca,03015
+Calle Doctor Bergez,03015
+Calle Doctor Cristóbal Pardo,03015
+Calle Hermanos Doctores Server Cerdá,03015
+Calle Jose Luis Garcia Selles,03015
+Calle José Luis Garcia Selles,03015
+Calle Severo Ochoa,03015
+Calle de los hermanos Álvarez Quintero,03015
+Calle general O'Donnell,03015
+Plaza alcalde Agatángelo Soler,03015
+Avenida de Denia,03016
+Avenida de la Condomina,03016
+Calle Daya Vieja,03016
+Calle Jiménez Navarlaz,03016
+Calle Remo,03016
+Calle San Pedro Poveda,03016
+Calle Sol Naciente,03016
+Calle Unicef,03016
+Calle Vicente Alexandre,03016
+Calle del Chelín,03114
+Avenida Costa Blanca,03540
+Avenida Costablanca,03540
+Avenida Maestro Jose Garberi Serrano,03540
+Avenida Pintor Fernando Soria,03540
+Avenida Santander,03540
+Avenida de Ansaldo,03540
+Avenida de Bruselas,03540
+Avenida de Niva,03540
+Avenida de Niza,03540
+Avenida de San Sebastián,03540
+Avenida de Santander,03540
+Avenida de la Condomina,03540
+Avenida de la Costa Blanca,03540
+Avenida de las Naciones,03540
+Avenida del Historiador Vicente Ramos,03540
+Avenida pintor Pérez Gil,03540
+Calle Arpón,03540
+Calle Britania,03540
+Calle Curricán,03540
+Calle Enric Valor,03540
+Calle Manuel Azaña,03540
+Calle Periodista Asuncion Valdes,03540
+Calle Periodista Tirso Marín,03540
+Calle Sicilia,03540
+Calle Tridente,03540
+Calle científico Jaime Santana,03540
+Calle de Maruja Pastor,03540
+Calle de los Paises Escandinavos,03540
+Calle músico Vicente Spiteri,03540
+Calle periodista Asunción Valdés,03540
+Calle de San Diego,03559
+Plaza Luís Foglietti,03559

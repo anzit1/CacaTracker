@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="420.0" prefWidth="601.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.MainuserpageView">
+    <children>
+        <Pane prefHeight="35.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
+            <children>
+                <Text fx:id="nombreUsuarioTxt" layoutX="418.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NombreDeUsuario" wrappingWidth="181.220703125">
+                    <font>
+                        <Font name="Arial Black" size="14.0" />
+                    </font>
+                </Text>
+                <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu principal">
+                    <font>
+                        <Font name="Arial Black" size="14.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
+        <Pane layoutX="32.0" layoutY="50.0" prefHeight="289.0" prefWidth="539.0">
+            <children>
+                <Button fx:id="tusIncidenciaButton" layoutX="6.0" layoutY="155.0" mnemonicParsing="false" onAction="#verTusIncidencias" onMouseEntered="#entraTusInc" onMouseExited="#saiTusInc" prefHeight="52.0" prefWidth="162.0" text="Tus Incidencias">
+                    <font>
+                        <Font name="Arial Black" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="editarIncidenciaButton" layoutX="6.0" layoutY="84.0" mnemonicParsing="false" onAction="#editaIncidencia" onMouseEntered="#entraEditaInc" onMouseExited="#saiEditaInc" prefHeight="52.0" prefWidth="162.0" text="Editar Incidencia">
+                    <font>
+                        <Font name="Arial Black" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="crearIncidenciaButton" layoutX="6.0" layoutY="7.0" mnemonicParsing="false" onAction="#creaIncidencia" onMouseEntered="#entraCreaInc" onMouseExited="#saiCreaInc" prefHeight="52.0" prefWidth="162.0" text="Crear Incidencia">
+                    <font>
+                        <Font name="Arial Black" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="todasIncidenciaButton" layoutX="6.0" layoutY="229.0" mnemonicParsing="false" onAction="#verTodasIncidencias" onMouseEntered="#entraTodasInc" onMouseExited="#saiTodasInc" prefHeight="52.0" prefWidth="162.0" text="Todas Incidencias">
+                    <font>
+                        <Font name="Arial Black" size="14.0" />
+                    </font>
+                </Button>
+                <TextArea fx:id="explicaButton" editable="false" layoutX="225.0" layoutY="7.0" prefHeight="128.0" prefWidth="306.0" />
+            <Button fx:id="estadisticasButton" layoutX="363.0" layoutY="229.0" mnemonicParsing="false" onAction="#verEstadisticas" onMouseEntered="#entraTodasInc" onMouseExited="#saiTodasInc" prefHeight="52.0" prefWidth="162.0" text="Estadisticas">
+               <font>
+                  <Font name="Arial Black" size="14.0" />
+               </font>
+            </Button>
+            </children>
+        </Pane>
+        <Pane layoutX="-1.0" layoutY="374.0" prefHeight="46.0" prefWidth="605.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
+            <Button fx:id="logoutButton" layoutX="496.0" layoutY="7.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="32.0" prefWidth="95.0" text="Logout">
+                <font>
+                    <Font name="Arial Black" size="14.0" />
+                </font>
+            </Button>
+            <Button fx:id="opcionesButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="95.0" text="Opciones">
+                <font>
+                    <Font name="Arial Black" size="14.0" />
+                </font>
+            </Button>
+        </Pane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,25 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);
+}
+
+.pane {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);
+}
+
+.text {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 14px;
+    -fx-fill: #333;
+}
+
+.button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 16px;
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+}
