@@ -2,6 +2,7 @@
 Proyecto Final FP-SEMI DAM
 
 🐶 CacaTracker
+
 📌 Resumen
 CacaTracker es una aplicación diseñada para fomentar la conciencia ciudadana sobre un problema común en las calles, especialmente en Alicante: los residuos “olvidados” de las mascotas.
 
