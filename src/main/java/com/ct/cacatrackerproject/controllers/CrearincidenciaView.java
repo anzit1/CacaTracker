@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
 import java.util.Objects;
 
 
@@ -75,8 +74,8 @@ public class CrearincidenciaView {
             return;
         }
         filteredAddresses.clear();
-
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234")) {
+/*
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");) {
             String query = "SELECT Direccion, CodigoPostal FROM Direcciones WHERE Direccion LIKE ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, "%" + input + "%");
@@ -93,7 +92,7 @@ public class CrearincidenciaView {
             e.printStackTrace();
         }
         suggestionList.setVisible(!filteredAddresses.isEmpty());
-        suggestionList.toFront();
+        suggestionList.toFront();*/
     }
 
     public void volverAction(ActionEvent actionEvent) {
@@ -124,13 +123,13 @@ public class CrearincidenciaView {
             System.out.println("Hay campos vacíos.");
             return;
         }
-
+/*
         int userId = UserSession.getInstance().getUserId();
         if (userId == -1) {
             showAlert("Error Usuario.", "Usuario no está logeado", Alert.AlertType.ERROR);
             System.out.println("User no logeado!");
             return;
-        }
+        }*/
 
         String url = "jdbc:mysql://localhost:3306/cacatracker";
         String user = "root";
@@ -140,9 +139,9 @@ public class CrearincidenciaView {
 
         CompressionImagen compressionImagen = new CompressionImagen();
         imagenSeleccionada = compressionImagen.resizeImagen(imagenSeleccionada,1024, 1024, 10 * 1024 * 1024);
-
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(insertSQL);
+/*
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");
+             PreparedStatement pstmt = connection.prepareStatement(insertSQL);
              FileInputStream fis = new FileInputStream(imagenSeleccionada)) {
 
             pstmt.setInt(1, userId);
@@ -166,7 +165,7 @@ public class CrearincidenciaView {
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void showAlert(String title, String content, Alert.AlertType alertType) {

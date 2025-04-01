@@ -4,24 +4,22 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class EmailConfirmarCuenta {
 
-    public void emailConfirmadorCuenta(String toEmail, String activationCode){
-        final String fromEmail = "your_email@example.com"; // Cambia esto
-        final String password = "your_password"; // Usa variables de entorno o un gestor de secretos
+    public void emailConfirmadorCuenta(String toEmail, String activationCode) {
 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        final String fromEmail = "cacatracker2025@gmail.com";
+        final String password = "igov rqdg jugb jqrt";
 
-        Session session = Session.getInstance(props, new Authenticator() {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);
             }
@@ -31,7 +29,7 @@ public class EmailConfirmarCuenta {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject("Código de activación");
+            message.setSubject("CACATRACKER - ALICANTE - Código de activación");
             message.setText("Tu código de activación es: " + activationCode);
 
             Transport.send(message);
@@ -40,23 +38,4 @@ public class EmailConfirmarCuenta {
             e.printStackTrace();
         }
     }
-    /*
-    public boolean activateUser(String email, String userCode) throws SQLException {
-        String query = "SELECT codigoactiva FROM USERS WHERE email = ?";
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setString(1, email);
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            String storedCode = rs.getString("codigoactiva");
-            if (storedCode.equals(userCode)) {
-                String updateQuery = "UPDATE USERS SET activado = TRUE WHERE email = ?";
-                PreparedStatement updateStmt = connection.prepareStatement(updateQuery);
-                updateStmt.setString(1, email);
-                updateStmt.executeUpdate();
-                return true;
-            }
-        }
-        return false;
-    }*/
 }

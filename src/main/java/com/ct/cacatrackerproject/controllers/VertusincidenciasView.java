@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.*;
+
 
 
 public class VertusincidenciasView {
@@ -41,7 +41,7 @@ public class VertusincidenciasView {
 
     public void initialize(){
         username = UserSession.getInstance().getUsername();
-        userId = UserSession.getInstance().getUserId();
+       // userId = UserSession.getInstance().getUserId();
         userIdString = Integer.toString(userId);
         nombreUsuarioTxt.setText(username);
         cargarIncidencias();
@@ -51,9 +51,9 @@ public class VertusincidenciasView {
         contenedorIncidencias.getChildren().clear();
 
         String query = "SELECT id, direccion, codigopostal, foto, nombreartistico FROM incidencias WHERE id_users = ?";
-
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+/*
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, userId);
             ResultSet resultSet = pstmt.executeQuery();
@@ -97,74 +97,13 @@ public class VertusincidenciasView {
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
 
-                Button verButton = new Button("Editar");
                 Button borrarButton = new Button("Borrar");
-                verButton.setOnAction(event -> openEditDialog(incidenciaId,nombreArtistico, direccion, codigoPostal));
                 borrarButton.setOnAction(event -> confirmDelete(incidenciaId));
 
-
-                itemContainer.getChildren().addAll(imageView, textContainer, spacer, verButton,borrarButton);
+                itemContainer.getChildren().addAll(imageView, textContainer, spacer, borrarButton);
                 contenedorIncidencias.getChildren().add(itemContainer);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void openEditDialog(int incidenciaId,String nombreArtistico, String direccion, String codigoPostal) {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.setTitle("Editar Incidencia");
-
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(15));
-
-        TextField nombreArtField = new TextField(nombreArtistico);
-        TextField direccionField = new TextField(direccion);
-        TextField codigoPostalField = new TextField(codigoPostal);
-
-        Button saveButton = new Button("Guardar Cambios");
-
-        saveButton.setOnAction(e -> {
-            String nuevoNombreArt = nombreArtField.getText().trim();
-            String nuevaDireccion = direccionField.getText().trim();
-            String nuevoCodigoPostal = codigoPostalField.getText().trim();
-
-            if (nuevoNombreArt.isEmpty() || nuevaDireccion.isEmpty() || nuevoCodigoPostal.isEmpty()) {
-                showAlert("Error", "Todos los campos deben estar completos.", Alert.AlertType.ERROR);
-                return;
-            }
-
-            updateIncidenciaInDB(incidenciaId, nuevoNombreArt, nuevaDireccion, nuevoCodigoPostal);
-            cargarIncidencias();
-            dialogStage.close();
-        });
-
-        vbox.getChildren().addAll(
-                new Label("Artista:"), nombreArtField,
-                new Label("Dirección:"), direccionField,
-                new Label("Código Postal:"), codigoPostalField,
-                saveButton
-        );
-
-        Scene scene = new Scene(vbox, 300, 250);
-        dialogStage.setScene(scene);
-        dialogStage.showAndWait();
-    }
-
-    private void updateIncidenciaInDB(int incidenciaId,String nuevoNombreArt, String nuevaDireccion, String nuevoCodigoPostal) {
-        String sql = "UPDATE incidencias SET nombreartistico=?, direccion=?, codigopostal=? WHERE id=?";
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, nuevoNombreArt);
-            pstmt.setString(2, nuevaDireccion);
-            pstmt.setString(3, nuevoCodigoPostal);
-            pstmt.setInt(4, incidenciaId);
-            pstmt.executeUpdate();
-
-            System.out.println("Incidencia actualizada.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -223,4 +162,4 @@ public class VertusincidenciasView {
             e.printStackTrace();
         }
     }
-}
+}*/}}

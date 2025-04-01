@@ -1,21 +1,22 @@
 package com.ct.cacatrackerproject.controllers;
 
 import com.ct.cacatrackerproject.clases.UserSession;
+import com.ct.cacatrackerproject.utils.ApiClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
-import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginpageView {
 
@@ -29,74 +30,51 @@ public class LoginpageView {
     private PasswordField passwordInput;
 
     @FXML
-    public void loginButtonPress(ActionEvent actionEvent) throws SQLException {
+    public void loginButtonPress(ActionEvent actionEvent) throws IOException {
 
-        /*
-        String checkLoginQuery = "SELECT password, activado FROM USERS WHERE email = ?";
-PreparedStatement loginStmt = connection.prepareStatement(checkLoginQuery);
-loginStmt.setString(1, email);
-ResultSet rs = loginStmt.executeQuery();
+        // # Setup ENDPOINT REQUEST
+        //
+        String endpoint = "/users/login";
 
-if (rs.next()) {
-    boolean isActive = rs.getBoolean("activado");
-    if (!isActive) {
-        showAlert("Cuenta no activada", "Debes activar tu cuenta antes de iniciar sesión.");
-        return;
-    }
+        String username = userInput.getText().trim();
+        String password = passwordInput.getText().trim();
 
-    String hashedPassword = rs.getString("password");
-    if (BCrypt.checkpw(password, hashedPassword)) {
-        System.out.println("Login exitoso");
-    } else {
-        showAlert("Error", "Contraseña incorrecta.");
-    }
-} else {
-    showAlert("Error", "Usuario no encontrado.");
-}
-        */
+        ObjectMapper objMap = new ObjectMapper();
+        Map<String, String> dataJSON = new HashMap<>();
 
-        String username = userInput.getText().toString();
-        String password = passwordInput.getText().toString();
+        dataJSON.put("username", username);
+        dataJSON.put("password", password);
+        String jsonResponse = objMap.writeValueAsString(dataJSON);
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");
-        String query = "SELECT id, password FROM users WHERE username = ?";
+        // # Respuesta API
+        //
+        String response = ApiClient.sendPostRequest(endpoint, jsonResponse);
+        System.out.println(response);
 
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, username);
+        if (response != null) {
+            if (response.contains("OKLOGIN")) {
+                UserSession.getInstance();
+                JsonNode jsonResponseNode = objMap.readTree(response);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+                String token = jsonResponseNode.get("token").asText();
+                String usernameFromResponse = jsonResponseNode.get("username").asText();
 
-        if (resultSet.next()) {
+                UserSession.getInstance().setUsername(usernameFromResponse);
+                UserSession.getInstance().setToken(token);
 
-            String storedHashedPassword = resultSet.getString("password");
-            int userId = resultSet.getInt("id");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/mainuserpage-view.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
 
-            if (BCrypt.checkpw(password, storedHashedPassword)) {
-
-                UserSession.getInstance().setUserInfo(username, userId);
-                UserSession.getInstance().setUserInfo(username, userId);
-
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/mainuserpage-view.fxml"));
-                    AnchorPane root = fxmlLoader.load();
-
-                    Scene scene = new Scene(root);
-                    scene.getRoot().requestFocus();
-                    Stage stage = (Stage) loginButton.getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                showAlert("Login Incorrecto", "Tus datos no están correctos.", Alert.AlertType.ERROR);
+            } else if (response.contains("KOLOGIN")) {
+                showAlert("Error en Login", "Usuario o contraseña errónea.", Alert.AlertType.ERROR);
             }
         } else {
-            showAlert("Login Incorrecto", "Usuario no existe.", Alert.AlertType.ERROR);
+            showAlert("Error Servidor", "No se pudo conectar con el servidor", Alert.AlertType.ERROR);
         }
-        connection.close();
     }
 
     @FXML
@@ -132,4 +110,5 @@ if (rs.next()) {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
 }

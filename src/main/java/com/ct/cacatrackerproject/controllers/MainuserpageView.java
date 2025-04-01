@@ -80,10 +80,22 @@ public class MainuserpageView {
         }
     }
 
-    public void editaIncidencia(ActionEvent actionEvent) {
+    public void verEstadisticas(ActionEvent actionEvent) {
     }
 
     public void verTodasIncidencias(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/vertodasincidencias-view.fxml"));
+            AnchorPane root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            scene.getRoot().requestFocus();
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void entraCreaInc(MouseEvent mouseEvent) {
@@ -102,14 +114,6 @@ public class MainuserpageView {
         limpiaExplica();
     }
 
-    public void entraEditaInc(MouseEvent mouseEvent) {
-        explicaButton.setText("Explica Edita incidencia");
-    }
-
-    public void saiEditaInc(MouseEvent mouseEvent) {
-        limpiaExplica();
-    }
-
     public void entraTusInc(MouseEvent mouseEvent) {
         explicaButton.setText("Explica Tus incidencia");
     }
@@ -118,10 +122,15 @@ public class MainuserpageView {
         limpiaExplica();
     }
 
-    public void limpiaExplica(){
-        explicaButton.setText("");
+    public void entraEstadInc(MouseEvent mouseEvent) {
+        explicaButton.setText("Explica estadisticas");
     }
 
-    public void verEstadisticas(ActionEvent actionEvent) {
+    public void saiEstadInc(MouseEvent mouseEvent) {
+        limpiaExplica();
+    }
+
+    public void limpiaExplica(){
+        explicaButton.clear();
     }
 }

@@ -1,8 +1,9 @@
 package com.ct.cacatrackerproject.controllers;
 
+import com.ct.cacatrackerproject.utils.ApiClient;
 import com.ct.cacatrackerproject.utils.CheckCodigoPostal;
-import com.ct.cacatrackerproject.utils.EmailConfirmarCuenta;
 import com.ct.cacatrackerproject.utils.GeneradorCodigo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
+
 import java.io.IOException;
-import java.sql.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RegistrarpageView {
@@ -44,13 +52,10 @@ public class RegistrarpageView {
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
-    // Encryptar la contraseña
     private String hashPassword(String password) {
-        String salt = BCrypt.gensalt();
-        return BCrypt.hashpw(password, salt);
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    // Verifica codigo postal
     private boolean checkCodigoPosta(String codigoPostal) {
         CheckCodigoPostal check = new CheckCodigoPostal();
         return check.cpValido(codigoPostal);
@@ -59,64 +64,80 @@ public class RegistrarpageView {
     @FXML
     public void registrarButtonPress(ActionEvent actionEvent) throws Exception {
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");
+        String userName = nuevoUserInput.getText().trim();
+        String email = nuevoCorreoInput.getText().trim();
+        String password = passwordInput.getText().trim();
+        String passwordRepetir = repetirPasswordInput.getText().trim();
+        String codigoPostal = codigoPostalInput.getText().trim();
 
-        if (!nuevoUserInput.getText().isEmpty() &&
-                !passwordInput.getText().isEmpty() &&
-                !repetirPasswordInput.getText().isEmpty() &&
-                !codigoPostalInput.getText().isEmpty()) {
 
-            String userName = nuevoUserInput.getText();
-            String email = nuevoCorreoInput.getText();
+        // # CHECK INPUTS CORRECTOS
+        //
+        if (userName.isEmpty() || email.isEmpty() || password.isEmpty() || passwordRepetir.isEmpty() || codigoPostal.isEmpty()) {
+            showAlert("Datos vacíos.", "Faltan campos por completar", "Por favor, complete todos los campos.");
+            return;
+        }
 
-            String checkUserQuery = "SELECT COUNT(*) FROM USERS WHERE username = ? OR email = ?";
-            PreparedStatement checkUserStmt = connection.prepareStatement(checkUserQuery);
-            checkUserStmt.setString(1, userName);
-            checkUserStmt.setString(2, email);
-            ResultSet rs = checkUserStmt.executeQuery();
-            rs.next();
+        if (userName.length() < 4) {
+            showAlert("Error en Nombre de Usuario.", "Nombre de usuario demasiado corto", "Debe tener al menos 4 caracteres.");
+            return;
+        }
 
-            if (rs.getInt(1) > 0) {
-                showAlert("Error en registro de usuario.", "Usuario o correo ya en uso", "Por favor, elige otro nombre de usuario o correo.");
-            } else {
-                String password = passwordInput.getText();
-                String passwordRepetir = repetirPasswordInput.getText();
+        if (!email.matches(EMAIL_REGEX)) {
+            showAlert("Error en Correo Electrónico.", "Formato de correo inválido", "Por favor, ingrese un correo válido.");
+            return;
+        }
 
-                if (!password.equals(passwordRepetir)) {
-                    showAlert("Error en contraseña.", "Las contraseñas no coinciden", "Por favor, verifica las contraseñas ingresadas.");
-                } else {
-                    String passwordHashed = hashPassword(password);
+        if (password.length() < 8) {
+            showAlert("Error en Contraseña.", "Contraseña demasiado corta", "Debe tener al menos 8 caracteres.");
+            return;
+        }
 
-                    String codigoPostal = codigoPostalInput.getText();
-                    boolean bienCP = checkCodigoPosta(codigoPostal);
-                    if (!bienCP) {
-                        showAlert("Error en Código Postal.", "Código Postal incorrecto", "Ingrese un código válido de Alicante.");
-                    } else {
-                        GeneradorCodigo gen = new GeneradorCodigo();
-                        String codigoActiva = gen.generaCodigo();
-                        String insertQuery = "INSERT INTO USERS (username, email, password, codigopostal, codigoactiva, activado) VALUES (?, ?, ?, ?, ?, ?)";
+        if (!password.equals(passwordRepetir)) {
+            showAlert("Error en Contraseña.", "Las contraseñas no coinciden", "Por favor, verifica las contraseñas ingresadas.");
+            return;
+        }
 
-                        PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
-                        insertStmt.setString(1, userName);
-                        insertStmt.setString(2, email);
-                        insertStmt.setString(3, passwordHashed);
-                        insertStmt.setString(4, codigoPostal);
-                        insertStmt.setString(5, codigoActiva);
-                        insertStmt.setBoolean(6, false);
-                        int rowsInserted = insertStmt.executeUpdate();
+        boolean bienCP = checkCodigoPosta(codigoPostal);
+        if (!bienCP) {
+            showAlert("Error en Código Postal.", "Código Postal incorrecto", "Ingrese un código válido de Alicante.");
+            return;
+        }
 
-                        if (rowsInserted > 0) {
-                            EmailConfirmarCuenta emailEnviado = new EmailConfirmarCuenta();
-                            emailEnviado.emailConfirmadorCuenta(email, codigoActiva);
-                            System.out.println("User registered successfully!");
-                        } else {
-                            System.out.println("Error registering user.");
-                        }
-                    }
-                }
+        // # UTILS DE DATOS
+        //
+        String passwordHashed = hashPassword(password);
+        GeneradorCodigo gen = new GeneradorCodigo();
+        String codigoActiva = gen.generaCodigo();
+
+        // # MAPPING DE DATOS
+        //
+        Map<String, String> requestData = new HashMap<>();
+        requestData.put("username", userName);
+        requestData.put("email", email);
+        requestData.put("password", passwordHashed);
+        requestData.put("codigopostal", codigoPostal);
+        requestData.put("codigoactiva", codigoActiva);
+        requestData.put("activado", "false");
+
+        // # ENVIO API REQUEST
+        //
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonBody = objectMapper.writeValueAsString(requestData);
+        String response = ApiClient.sendPostRequest("/users/registrar", jsonBody);
+
+        System.out.println(response);
+        if (response != null) {
+            if (response.contains("OKREGISTRO")) {
+                clearInput();
+                showAlert("Registro exitoso", "Usuario registrado correctamente", "Por favor, revise su correo para activar la cuenta.");
+            } else if (response.contains("KOUSEREMAIL")) {
+                showAlert("Error en Registro", "El usuario o correo electrónico ya está registrado.", "Por favor, use otro correo o nombre de usuario.");
+            } else if (response.contains("KOSERVER")) {
+                showAlert("Error en Registro", "Hubo un error inesperado en el servidor", "Por favor, intente nuevamente.");
             }
         } else {
-            showAlert("Datos vacíos.", "Faltan campos por completar", "Por favor, complete todos los campos.");
+            showAlert("Error en Registro", "No se pudo conectar con el servidor", "Por favor, revise su conexión a internet.");
         }
     }
 
@@ -143,6 +164,7 @@ public class RegistrarpageView {
         nuevoUserInput.clear();
         passwordInput.clear();
         repetirPasswordInput.clear();
+        nuevoCorreoInput.clear();
         codigoPostalInput.clear();
     }
 
@@ -153,6 +175,17 @@ public class RegistrarpageView {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    private void clearInput() {
+        nuevoUserInput.clear();
+        passwordInput.clear();
+        repetirPasswordInput.clear();
+        nuevoCorreoInput.clear();
+        codigoPostalInput.clear();
+    }
+
 }
+
+
 
 
