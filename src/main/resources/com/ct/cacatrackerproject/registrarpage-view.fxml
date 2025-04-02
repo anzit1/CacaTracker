@@ -4,76 +4,88 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.RegistrarpageView">
-    <children>
-        <TextField fx:id="nuevoUserInput" layoutX="195.0" layoutY="100.0" prefHeight="25.0" prefWidth="255.0" promptText="Nombre de usuario">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </TextField>
-        <PasswordField fx:id="passwordInput" layoutX="195.0" layoutY="213.0" prefHeight="25.0" prefWidth="255.0" promptText="Contraseña">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </PasswordField>
-        <Text layoutX="182.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar nuevo usuario">
-            <font>
-                <Font name="Arial Black" size="18.0" />
-            </font>
-        </Text>
-        <Button fx:id="registrarButton" layoutX="195.0" layoutY="298.0" mnemonicParsing="false" onAction="#registrarButtonPress" prefHeight="32.0" prefWidth="255.0" text="Registrar">
-            <font>
-                <Font name="Arial Black" size="14.0" />
-            </font>
-        </Button>
-        <Button fx:id="volverButton" layoutX="511.0" layoutY="361.0" mnemonicParsing="false" onAction="#volverButtonPress" prefHeight="31.0" prefWidth="75.0" text="Volver">
-            <font>
-                <Font name="System Bold" size="15.0" />
-            </font>
-        </Button>
-      <PasswordField fx:id="repetirPasswordInput" layoutX="195.0" layoutY="254.0" prefHeight="30.0" prefWidth="255.0" promptText="Repetir Contraseña">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></PasswordField>
-      <TextField fx:id="codigoPostalInput" layoutX="195.0" layoutY="174.0" prefHeight="30.0" prefWidth="255.0" promptText="Codigo Postal">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </TextField>
-      <Text layoutX="26.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario" wrappingWidth="75.0">
-         <font>
-            <Font name="Arial Black" size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="26.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo Postal" wrappingWidth="115.0">
-         <font>
-            <Font name="Arial Black" size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="26.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña" wrappingWidth="115.0">
-         <font>
-            <Font name="Arial Black" size="15.0" />
-         </font>
-      </Text>
-      <Text layoutX="26.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Repetir Contraseña" wrappingWidth="169.0">
-         <font>
-            <Font name="Arial Black" size="15.0" />
-         </font>
-      </Text>
-      <Button fx:id="limpiarButton" layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#limpiarButtonPress" prefHeight="31.0" prefWidth="115.0" text="Borrar datos">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <Text layoutX="26.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="75.0">
-         <font>
-            <Font name="Arial Black" size="15.0" />
-         </font>
-      </Text>
-      <TextField fx:id="nuevoCorreoInput" layoutX="195.0" layoutY="137.0" prefHeight="25.0" prefWidth="255.0" promptText="Correo Electronico">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </TextField>
-    </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ct.cacatrackerproject.controllers.RegistrarpageView">
+    <TextField fx:id="nuevoUserInput" layoutX="195.0" layoutY="100.0" prefHeight="25.0" prefWidth="255.0"
+               promptText="Nombre de usuario">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </TextField>
+    <PasswordField fx:id="passwordInput" layoutX="195.0" layoutY="213.0" prefHeight="25.0" prefWidth="255.0"
+                   promptText="Contraseña">
+        <font>
+            <Font name="System Bold" size="14.0"/>
+        </font>
+    </PasswordField>
+    <Text layoutX="182.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar nuevo usuario">
+        <font>
+            <Font name="Arial Black" size="18.0"/>
+        </font>
+    </Text>
+    <Button fx:id="registrarButton" layoutX="195.0" layoutY="298.0" mnemonicParsing="false"
+            onAction="#registrarButtonPress" prefHeight="32.0" prefWidth="255.0" text="Registrar">
+        <font>
+            <Font name="Arial Black" size="14.0"/>
+        </font>
+    </Button>
+    <Button fx:id="volverButton" layoutX="511.0" layoutY="361.0" mnemonicParsing="false" onAction="#volverButtonPress"
+            prefHeight="31.0" prefWidth="75.0" text="Volver">
+        <font>
+            <Font name="System Bold" size="15.0"/>
+        </font>
+    </Button>
+    <PasswordField fx:id="repetirPasswordInput" layoutX="195.0" layoutY="254.0" prefHeight="30.0" prefWidth="255.0"
+                   promptText="Repetir Contraseña">
+        <font>
+          <Font name="System Bold" size="14.0"/>
+        </font>
+    </PasswordField>
+    <TextField fx:id="codigoPostalInput" layoutX="195.0" layoutY="174.0" prefHeight="30.0" prefWidth="255.0"
+               promptText="Codigo Postal">
+        <font>
+          <Font name="System Bold" size="14.0"/>
+        </font>
+    </TextField>
+    <Text layoutX="26.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario" wrappingWidth="75.0">
+        <font>
+          <Font name="Arial Black" size="15.0"/>
+        </font>
+    </Text>
+    <Text layoutX="26.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo Postal"
+          wrappingWidth="115.0">
+        <font>
+          <Font name="Arial Black" size="15.0"/>
+        </font>
+    </Text>
+    <Text layoutX="26.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña" wrappingWidth="115.0">
+        <font>
+          <Font name="Arial Black" size="15.0"/>
+        </font>
+    </Text>
+    <Text layoutX="26.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Repetir Contraseña"
+          wrappingWidth="169.0">
+        <font>
+          <Font name="Arial Black" size="15.0"/>
+        </font>
+    </Text>
+    <Button fx:id="limpiarButton" layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#limpiarButtonPress"
+            prefHeight="31.0" prefWidth="115.0" text="Borrar datos">
+        <font>
+          <Font name="System Bold" size="15.0"/>
+        </font>
+    </Button>
+    <Text layoutX="26.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="75.0">
+        <font>
+          <Font name="Arial Black" size="15.0"/>
+        </font>
+    </Text>
+    <TextField fx:id="nuevoCorreoInput" layoutX="195.0" layoutY="137.0" prefHeight="25.0" prefWidth="255.0"
+               promptText="Correo Electronico">
+        <font>
+          <Font name="System Bold" size="14.0"/>
+        </font>
+    </TextField>
 </AnchorPane>

@@ -70,7 +70,6 @@ public class RegistrarpageView {
         String passwordRepetir = repetirPasswordInput.getText().trim();
         String codigoPostal = codigoPostalInput.getText().trim();
 
-
         // # CHECK INPUTS CORRECTOS
         //
         if (userName.isEmpty() || email.isEmpty() || password.isEmpty() || passwordRepetir.isEmpty() || codigoPostal.isEmpty()) {

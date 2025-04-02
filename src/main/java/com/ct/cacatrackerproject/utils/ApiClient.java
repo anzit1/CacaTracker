@@ -13,43 +13,47 @@ public class ApiClient {
     private static final String BASE_URL = "http://localhost:8080/cacatrackerapi/rest";
 
     public static String sendPostRequest(String endpoint, String jsonBody) throws IOException {
+        try {
+            URL url = new URL(BASE_URL + endpoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
 
-        URL url = new URL(BASE_URL + endpoint);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+            int responseCode = connection.getResponseCode();
+            System.out.println("1Response Code: " + responseCode);
 
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-
-        int responseCode = connection.getResponseCode();
-        System.out.println(responseCode);
-
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            return readResponse(connection);
-        } else if (responseCode == HttpURLConnection.HTTP_CREATED) {
-            return readResponse(connection);
-        } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
-            System.out.println("Error response: " + responseCode + " BAD LOGIN");
-            return readResponse(connection);
-        } else {
-            System.out.println("Error response: " + responseCode);
+            String responseBody = readResponse(connection);
+            System.out.println("2Response Body: " + responseBody);
+            return responseBody;
+        } catch (IOException e) {
+            System.err.println("3Error during HTTP request: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
 
     private static String readResponse(HttpURLConnection connection) throws IOException {
+
         StringBuilder response = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(connection.getResponseCode() >= 400 ? connection.getErrorStream() : connection.getInputStream())
+        )) {
             String line;
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
+        } catch (IOException e) {
+            System.err.println("4Error reading response: " + e.getMessage());
+            e.printStackTrace();
         }
-        System.out.println("Response Body: " + response);
+        System.out.println("5RESPUESTA SERVIDOR RESPONSE METHOD");
+        System.out.println("6Response Body: " + response);
         return response.toString();
     }
 }
+
