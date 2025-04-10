@@ -25,4 +25,7 @@
             </font>
         </Button>
     </Pane>
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="20.0" layoutY="48.0" prefHeight="306.0" prefWidth="561.0">
+        <VBox fx:id="contenedorIncidencias" spacing="10"/>
+    </ScrollPane>
 </AnchorPane>

@@ -1,10 +1,14 @@
 package com.ct.cacatrackerproject.controllers;
 
+import com.ct.cacatrackerproject.clases.Direccion;
+import com.ct.cacatrackerproject.clases.Incidencias;
 import com.ct.cacatrackerproject.clases.UserSession;
+import com.ct.cacatrackerproject.utils.ApiClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,12 +17,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class VertusincidenciasView {
@@ -34,37 +42,72 @@ public class VertusincidenciasView {
 
     private String username;
     private int userId;
-    private String userIdString;
-    private final String url = "jdbc:mysql://localhost:3306/cacatracker";
-    private final String user = "root";
-    private final String password = "1234";
 
     public void initialize(){
         username = UserSession.getInstance().getUsername();
-       // userId = UserSession.getInstance().getUserId();
-        userIdString = Integer.toString(userId);
-        nombreUsuarioTxt.setText(username);
+        userId = UserSession.getInstance().getId();
+        nombreUsuarioTxt.setText("Usuario: " + username);
         cargarIncidencias();
     }
 
     private void cargarIncidencias() {
+
         contenedorIncidencias.getChildren().clear();
+        String apiUrl = "http://localhost:8080/cacatrackerapi/rest/incidencias/user/" + userId;
+        try {
 
-        String query = "SELECT id, direccion, codigopostal, foto, nombreartistico FROM incidencias WHERE id_users = ?";
-/*
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.connect();
 
-            pstmt.setInt(1, userId);
-            ResultSet resultSet = pstmt.executeQuery();
+            int responseCode = connection.getResponseCode();
 
-            while (resultSet.next()) {
-                int incidenciaId = resultSet.getInt("id");
-                String direccion = resultSet.getString("direccion");
-                String codigoPostal = resultSet.getString("codigopostal");
-                String nombreArtistico = resultSet.getString("nombreartistico");
-                byte[] fotoBytes = resultSet.getBytes("foto");
+            if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) { // 404
+                System.out.println("Usuario no tiene incidencias registradas: " + userId);
+                return;
+            }
 
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                System.out.println("Server responded with error code: " + responseCode);
+                return;
+            }
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonResponse = objectMapper.readTree(response.toString());
+
+            if (jsonResponse.has("ERROR")) {
+                System.out.println("No incidencias found: " + jsonResponse.get("ERROR").asText());
+                return;
+            }
+
+            List<Incidencias> incidencias = objectMapper.readValue(
+                    response.toString(),
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Incidencias.class)
+            );
+
+            if (incidencias.isEmpty()) {
+                System.out.println("No incidencias found, but it's fine.");
+                return;
+            }
+
+            for (Incidencias incidencia : incidencias) {
+                Long incidenciaId = incidencia.getId();
+                System.out.println(incidenciaId);
+                String direccion = incidencia.getDireccion();
+                String codigoPostal = incidencia.getCodigopostal();
+                String nombreArtistico = incidencia.getNombreartistico();
+                incidencia.setFotoBase64(incidencia.getFotoBase64());
+                byte[] fotoBytes = incidencia.getFoto();
 
                 HBox itemContainer = new HBox(10);
                 itemContainer.setStyle("-fx-border-color: #ddd; -fx-padding: 10px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px;");
@@ -104,12 +147,14 @@ public class VertusincidenciasView {
                 contenedorIncidencias.getChildren().add(itemContainer);
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error", "No se pudo cargar las incidencias desde el servidor.", Alert.AlertType.ERROR);
         }
     }
 
-    public void confirmDelete(int incidenciaId) {
+    public void confirmDelete(Long incidenciaId) {
+        System.out.println(incidenciaId);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmar Eliminación");
         alert.setHeaderText("Seguro que deseas borrar esta incidencia?");
@@ -126,16 +171,30 @@ public class VertusincidenciasView {
             }
         });
     }
-    private void deleteIncidenciaFromDB(int incidenciaId) {
-        String sql = "DELETE FROM incidencias WHERE id=?";
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, String.valueOf(incidenciaId));
-            pstmt.executeUpdate();
-            System.out.println("Incidencia eliminada.");
-        } catch (SQLException e) {
+    private void deleteIncidenciaFromDB(Long incidenciaId) {
+        System.out.println(incidenciaId);
+        String apiUrl = "http://localhost:8080/cacatrackerapi/rest/incidencias/deleteincidencia/" + incidenciaId;
+
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                showAlert("Éxito", "Incidencia eliminada correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                showAlert("Error", "No se pudo eliminar la incidencia.", Alert.AlertType.ERROR);
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error", "Ocurrió un error al eliminar la incidencia.", Alert.AlertType.ERROR);
         }
     }
 
@@ -162,4 +221,4 @@ public class VertusincidenciasView {
             e.printStackTrace();
         }
     }
-}*/}}
+}

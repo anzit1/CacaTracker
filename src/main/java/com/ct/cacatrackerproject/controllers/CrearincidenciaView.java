@@ -1,7 +1,10 @@
 package com.ct.cacatrackerproject.controllers;
 
+import com.ct.cacatrackerproject.clases.Direccion;
+import com.ct.cacatrackerproject.utils.ApiClient;
 import com.ct.cacatrackerproject.utils.CompressionImagen;
 import com.ct.cacatrackerproject.clases.UserSession;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +25,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.*;
 
 
 public class CrearincidenciaView {
@@ -35,6 +38,7 @@ public class CrearincidenciaView {
     public TextField nombreArtisticoInput;
     public Button crearButton;
     private File imagenSeleccionada = null;
+    private ArrayList<Direccion> listaDeCalles;
 
     @FXML
     private Button volverButton;
@@ -45,15 +49,19 @@ public class CrearincidenciaView {
     private final ObservableList<String> filteredAddresses = FXCollections.observableArrayList();
 
     public void initialize() {
+        listaDeCalles = new ArrayList<Direccion>();
         String username = UserSession.getInstance().getUsername();
         nombreUsuarioTxt.setText("Usuario: " + username);
-
+        listaDeCalles.clear();
+        cargaTodasDirecciones();
         suggestionList.setItems(filteredAddresses);
 
+        //  Actualiza lista segun escrita del usuario
         direccionInput.textProperty().addListener((observable, oldValue, newValue) -> {
             updateSuggestions(newValue);
         });
 
+        // Selecciona la direccion de la lista de direcciones
         suggestionList.setOnMouseClicked(event -> {
             String selectedAddress = (String) suggestionList.getSelectionModel().getSelectedItem();
             if (selectedAddress != null) {
@@ -68,104 +76,89 @@ public class CrearincidenciaView {
         });
     }
 
+    // # CARGA EN MEMORIA LA LISTA DE TODAS LAS DIRECCIONES
+    //
+    private void cargaTodasDirecciones() {
+        try {
+            ArrayList<Direccion> direcciones = ApiClient.sendGetRequest("/direcciones", Direccion.class);
+            filteredAddresses.clear();
+            listaDeCalles.addAll(direcciones);
+            System.out.println(listaDeCalles.get(1));
+
+        } catch (IOException e) {
+            System.err.println("Error cargando direcciones: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // # FILTRA LISTA DE DIRECCIONES MIENTRAS USUARIO ESCRIBE
+    //
     private void updateSuggestions(String input) {
         if (input.isEmpty()) {
             suggestionList.setVisible(false);
             return;
         }
         filteredAddresses.clear();
-/*
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");) {
-            String query = "SELECT Direccion, CodigoPostal FROM Direcciones WHERE Direccion LIKE ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "%" + input + "%");
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String address = resultSet.getString("Direccion");
-                String postalCode = resultSet.getString("CodigoPostal");
-                filteredAddresses.add(address + " (" + postalCode + ")");
+        String lowerCaseInput = input.toLowerCase();
+        for (Direccion direccion : listaDeCalles) {
+            if (direccion.getDireccion().toLowerCase().contains(lowerCaseInput)) {
+                filteredAddresses.add(direccion.getDireccion() + " (" + direccion.getCodigoPostal() + ")");
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
         suggestionList.setVisible(!filteredAddresses.isEmpty());
-        suggestionList.toFront();*/
-    }
-
-    public void volverAction(ActionEvent actionEvent) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/mainuserpage-view.fxml"));
-            AnchorPane root = fxmlLoader.load();
-
-            Scene scene = new Scene(root);
-            scene.getRoot().requestFocus();
-            Stage stage = (Stage) volverButton.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        suggestionList.toFront();
     }
 
     public void crearIncidenciaButton(ActionEvent actionEvent) throws IOException {
 
+        String userName = UserSession.getInstance().getUsername();
         String nombreArtistico = nombreArtisticoInput.getText().trim();
         String direccion = direccionInput.getText().trim();
         String codigoPostal = codigoPostalInput.getText().trim();
-
+        CompressionImagen compressionImagen = new CompressionImagen();
+        imagenSeleccionada = compressionImagen.resizeImagen(imagenSeleccionada, 1024, 1024, 10 * 1024 * 1024); // 10 MB size limit
+        String imagenCodificada64 = CompressionImagen.encodeImageToBase64(imagenSeleccionada);
 
         if (direccion.isEmpty() || codigoPostal.isEmpty() || imagenSeleccionada == null || nombreArtistico.isEmpty()) {
             showAlert("Error en datos.", "Hay datos vacíos.", Alert.AlertType.ERROR);
             System.out.println("Hay campos vacíos.");
             return;
         }
-/*
-        int userId = UserSession.getInstance().getUserId();
-        if (userId == -1) {
-            showAlert("Error Usuario.", "Usuario no está logeado", Alert.AlertType.ERROR);
-            System.out.println("User no logeado!");
-            return;
-        }*/
+        Map<String, String> requestData = new HashMap<>();
+        requestData.put("nombreArtistico",nombreArtistico);
+        requestData.put("direccion",direccion);
+        requestData.put("codigoPostal",codigoPostal);
+        requestData.put("imagenCodificada64",imagenCodificada64);
+        requestData.put("username",userName);
 
-        String url = "jdbc:mysql://localhost:3306/cacatracker";
-        String user = "root";
-        String password = "1234";
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonBody = objectMapper.writeValueAsString(requestData);
+        String response = ApiClient.sendPostRequest("/incidencias/nuevaincidencia", jsonBody);
 
-        String insertSQL = "INSERT INTO incidencias (id_users, direccion, codigopostal, foto, nombreartistico) VALUES (?, ?, ?, ?, ?)";
+        System.out.println(response);
 
-        CompressionImagen compressionImagen = new CompressionImagen();
-        imagenSeleccionada = compressionImagen.resizeImagen(imagenSeleccionada,1024, 1024, 10 * 1024 * 1024);
-/*
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cacatracker", "root", "1234");
-             PreparedStatement pstmt = connection.prepareStatement(insertSQL);
-             FileInputStream fis = new FileInputStream(imagenSeleccionada)) {
-
-            pstmt.setInt(1, userId);
-            pstmt.setString(2, direccion);
-            pstmt.setString(3, codigoPostal);
-            pstmt.setBinaryStream(4, fis, (int) imagenSeleccionada.length());
-            pstmt.setString(5, nombreArtistico);
-
-            int rowsInserted = pstmt.executeUpdate();
-            if (rowsInserted > 0) {
-                showAlert("Incidencia creada.", "Has creado una nueva incidencia", Alert.AlertType.INFORMATION);
-                System.out.println("Incidencia creada!");
-
-                Image image = new Image(Objects.requireNonNull(getClass().getResource("/com/imagenes/SinFoto.jpg")).toExternalForm());
-                imagenPreview.setImage(image);
-                imagenSeleccionada = null;
-                nombreArtisticoInput.clear();
-                codigoPostalInput.clear();
-                direccionInput.clear();
+        if (response != null) {
+            if (response.contains("OKINCIDENCIA")) {
+                clearInput();
+                showAlert("Incidencia creada", "Gracias por crear una nueva incidencia.", Alert.AlertType.INFORMATION);
+            } else if (response.contains("KOINCIDENCIA")) {
+                showAlert("Error en creacion de incidencia", "Algo malo ha pasado, la incidencia no ha sido cread.", Alert.AlertType.ERROR);
+            } else if (response.contains("KOSERVER")) {
+                showAlert("Error en servidor", "Hubo un error inesperado en el servidor", Alert.AlertType.ERROR);
             }
+        } else {
+            showAlert("Error en servidor", "No se pudo conectar con el servidor", Alert.AlertType.ERROR);
+        }
+    }
 
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }*/
+    private void clearInput() {
+        nombreArtisticoInput.clear();
+        direccionInput.clear();
+        codigoPostalInput.clear();
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("/com/imagenes/SinFoto.jpg")).toExternalForm());
+        imagenPreview.setImage(image);
+        imagenSeleccionada = null;
     }
 
     private void showAlert(String title, String content, Alert.AlertType alertType) {
@@ -189,6 +182,22 @@ public class CrearincidenciaView {
             Image image = new Image(file.toURI().toString(), 181, 154, true, true);
             imagenPreview.setImage(image);
             imagenSeleccionada = file;
+        }
+    }
+
+    public void volverAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/mainuserpage-view.fxml"));
+            AnchorPane root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            scene.getRoot().requestFocus();
+            Stage stage = (Stage) volverButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

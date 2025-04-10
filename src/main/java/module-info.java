@@ -10,6 +10,8 @@ module com.ct.cacatrackerproject {
     requires jakarta.mail;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.annotation;
     requires java.desktop;
     requires java.prefs;
 
@@ -17,4 +19,5 @@ module com.ct.cacatrackerproject {
     exports com.ct.cacatrackerproject;
     exports com.ct.cacatrackerproject.controllers;
     opens com.ct.cacatrackerproject.controllers to javafx.fxml;
+    opens com.ct.cacatrackerproject.clases to com.fasterxml.jackson.databind;
 }

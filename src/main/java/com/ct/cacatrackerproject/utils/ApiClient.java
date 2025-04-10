@@ -1,12 +1,17 @@
 package com.ct.cacatrackerproject.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import com.ct.cacatrackerproject.clases.Direccion;
+import com.ct.cacatrackerproject.clases.Incidencias;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+
 
 public class ApiClient {
 
@@ -32,6 +37,52 @@ public class ApiClient {
             return responseBody;
         } catch (IOException e) {
             System.err.println("3Error during HTTP request: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static <T> ArrayList<T> sendGetRequest(String endpoint, Class<T> clazz) throws IOException {
+        try {
+            URL url = new URL(BASE_URL + endpoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept", "application/json");
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("GET Response Code: " + responseCode);
+
+            String responseBody = readResponse(connection);
+            System.out.println("GET Response Body: " + responseBody);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            ArrayList<T> result = objectMapper.readValue(responseBody, objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, clazz));
+            return result;
+
+        } catch (IOException e) {
+            System.err.println("Error during HTTP GET request: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static  String sendGetStringRequest(String endpoint) throws IOException {
+        try {
+            URL url = new URL(BASE_URL + endpoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept", "application/json");
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("GET Response Code: " + responseCode);
+
+            String responseBody = readResponse(connection);
+            System.out.println("GET Response Body: " + responseBody);
+
+            return responseBody;
+
+        } catch (IOException e) {
+            System.err.println("Error during HTTP GET request: " + e.getMessage());
             e.printStackTrace();
             return null;
         }

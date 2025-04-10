@@ -81,6 +81,18 @@ public class MainuserpageView {
     }
 
     public void verEstadisticas(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/estadistica-view.fxml"));
+            AnchorPane root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            scene.getRoot().requestFocus();
+            Stage stage = (Stage) estadisticasButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void verTodasIncidencias(ActionEvent actionEvent) {

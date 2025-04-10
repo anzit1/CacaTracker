@@ -64,8 +64,10 @@ public class LoginpageView {
 
                     UserSession.getInstance();
                     String token = jsonResponseNode.get("token").asText();
+                    String idUser = jsonResponseNode.get("idUser").asText();
                     UserSession.getInstance().setUsername(username);
                     UserSession.getInstance().setToken(token);
+                    UserSession.getInstance().setId(Integer.valueOf(idUser));
 
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/mainuserpage-view.fxml"));
                     Parent root = fxmlLoader.load();

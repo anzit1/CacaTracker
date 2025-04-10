@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="anchorMain" prefHeight="420.0" prefWidth="601.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.EstadisticaView">
+
+    <Pane prefHeight="35.0" prefWidth="605.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
+        <Text fx:id="nombreUsuarioTxt" layoutX="418.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NombreDeUsuario" wrappingWidth="181.220703125">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Text>
+        <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estadisticas">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Text>
+    </Pane>
+
+    <Pane layoutY="368.0" prefHeight="46.0" prefWidth="605.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="368.0">
+        <Button fx:id="volverButton" layoutX="496.0" layoutY="7.0" mnemonicParsing="false" onAction="#volverAction" prefHeight="32.0" prefWidth="95.0" text="Volver">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Button>
+    </Pane>
+    <Pane layoutY="35.0" prefHeight="333.0" prefWidth="160.0" style="-fx-background-color: linear-gradient(to bottom, #e6e6e6 0%, #b2b1b1 50%, #e6e6e6 100%);">
+        <Button fx:id="codPostalTu" layoutX="11.0" layoutY="78.0" mnemonicParsing="false" onAction="#codPostalTu" prefHeight="25.0" prefWidth="139.0" text="Codigo Postal" />
+        <Button fx:id="calleAvTu" layoutX="11.0" layoutY="115.0" mnemonicParsing="false" onAction="#calleAvTuButton" prefHeight="25.0" prefWidth="139.0" text="Calles/Avenidas" />
+        <Text layoutX="24.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tus incidencias segun:" textAlignment="CENTER" wrappingWidth="113.806640625">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Text>
+        <Text layoutX="23.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Todas incidencias segun:" textAlignment="CENTER" wrappingWidth="113.806640625">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Text>
+        <Button fx:id="codPostalTodos" layoutX="11.0" layoutY="239.0" mnemonicParsing="false" onAction="#codPostalTodosButton" prefHeight="25.0" prefWidth="139.0" text="Codigo Postal" />
+        <Button fx:id="calleAvTodos" layoutX="11.0" layoutY="273.0" mnemonicParsing="false" onAction="#calleAvTodosButton" prefHeight="25.0" prefWidth="139.0" text="Calles/Avenidas" />
+    </Pane>
+   <Pane fx:id="graphContainer" layoutX="169.0" layoutY="43.0" prefHeight="317.0" prefWidth="426.0" />
+</AnchorPane>

@@ -5,6 +5,7 @@ public class UserSession {
     private static UserSession instance;
 
     private String username;
+    private Integer id;
     private String token;
 
     private UserSession() {
@@ -16,6 +17,14 @@ public class UserSession {
             instance = new UserSession();
         }
         return instance;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {
@@ -40,5 +49,6 @@ public class UserSession {
     public void clearUserInfo() {
         this.username = null;
         this.token = null;
+        this.id = null;
     }
 }
