@@ -111,7 +111,14 @@ public class MainuserpageView {
     }
 
     public void entraCreaInc(MouseEvent mouseEvent) {
-        explicaButton.setText("Explica Cria incidencia");
+        explicaButton.setText(  """
+                Aquí puedes crear una nueva incidencia.
+                
+                - Necessitas aportar:
+                    Un nombre artístico que eligas
+                    Selecciona la direccion de la incidencia
+                    Añade una foto cómo prueba
+                """);
     }
 
     public void saiCreaInc(MouseEvent mouseEvent) {
@@ -119,7 +126,13 @@ public class MainuserpageView {
     }
 
     public void entraTodasInc(MouseEvent mouseEvent) {
-        explicaButton.setText("Explica Todas incidencia");
+        explicaButton.setText(  """
+                Aquí puedes consultar todas las
+                incidencias globales.
+                
+                - Si quieres borrar alguna incidencia,
+                consulta "Tus incidencias".
+                """);
     }
 
     public void saiTodasInc(MouseEvent mouseEvent) {
@@ -127,7 +140,9 @@ public class MainuserpageView {
     }
 
     public void entraTusInc(MouseEvent mouseEvent) {
-        explicaButton.setText("Explica Tus incidencia");
+        explicaButton.setText(  """
+                Aquí puedes consultar y borrar tus incidencias.
+                """);
     }
 
     public void saiTusInc(MouseEvent mouseEvent) {
@@ -135,7 +150,16 @@ public class MainuserpageView {
     }
 
     public void entraEstadInc(MouseEvent mouseEvent) {
-        explicaButton.setText("Explica estadisticas");
+        explicaButton.setText(
+                """
+                Aquí puedes consultar las estadisticas globales 
+                y personales de las incidencias.
+                
+                - Vista por:
+                    Código Postal
+                    Calle/Avenida
+                """
+                );
     }
 
     public void saiEstadInc(MouseEvent mouseEvent) {
