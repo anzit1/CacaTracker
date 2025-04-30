@@ -106,7 +106,7 @@ public class VertusincidenciasView {
                 String direccion = incidencia.getDireccion();
                 String codigoPostal = incidencia.getCodigopostal();
                 String nombreArtistico = incidencia.getNombreartistico();
-                incidencia.setFotoBase64(incidencia.getFotoBase64());
+                //incidencia.setFotoBase64(incidencia.getFotoBase64()); -- ALTERADO
                 byte[] fotoBytes = incidencia.getFoto();
 
                 HBox itemContainer = new HBox(10);

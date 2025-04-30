@@ -11,21 +11,10 @@ public class Incidencias {
     private String codigopostal;
     private String nombreartistico;
     private byte[] foto;
-    private String fotoBase64;
+    //private String fotoBase64;
 
     @JsonProperty("idUsers")
     private Users idUsers;
-
-    public String getFotoBase64() {
-        return fotoBase64;
-    }
-
-    public void setFotoBase64(String fotoBase64) {
-        this.fotoBase64 = fotoBase64;
-        if (fotoBase64 != null && !fotoBase64.isEmpty()) {
-            this.foto = Base64.getDecoder().decode(fotoBase64);
-        }
-    }
 
     public Users getIdUser() {
         return idUsers;

@@ -1,17 +1,11 @@
 package com.ct.cacatrackerproject.utils;
 
-import com.ct.cacatrackerproject.clases.Direccion;
-import com.ct.cacatrackerproject.clases.Incidencias;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
-
 
 public class ApiClient {
 
