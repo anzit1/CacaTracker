@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.VertodasincidenciasView">
+<AnchorPane prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.VertodasincidenciasView">
     <Pane prefHeight="35.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);">
         <Text fx:id="nombreUsuarioTxt" layoutX="418.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NombreDeUsuario" wrappingWidth="181.220703125">
             <font>
@@ -25,7 +25,14 @@
             </font>
         </Button>
     </Pane>
-    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="20.0" layoutY="48.0" prefHeight="306.0" prefWidth="561.0">
+
+    <HBox layoutX="20.0" layoutY="48.0" spacing="10">
+        <Button text="Ordenar por Fecha" onAction="#orderByDate"/>
+        <Button text="Ordenar por Nombre Artístico" onAction="#orderByNombreArtistico"/>
+        <Button text="Ordenar por Código Postal" onAction="#orderByCodigoPostal"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="20.0" layoutY="78.0" prefHeight="280" prefWidth="561.0">
         <VBox fx:id="contenedorIncidencias" spacing="10"/>
     </ScrollPane>
 </AnchorPane>

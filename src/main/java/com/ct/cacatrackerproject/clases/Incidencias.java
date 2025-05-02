@@ -1,8 +1,9 @@
 package com.ct.cacatrackerproject.clases;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Base64;
+import java.util.Date;
 
 public class Incidencias {
 
@@ -10,8 +11,11 @@ public class Incidencias {
     private String direccion;
     private String codigopostal;
     private String nombreartistico;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date fechacreacion;
+
     private byte[] foto;
-    //private String fotoBase64;
 
     @JsonProperty("idUsers")
     private Users idUsers;
@@ -54,6 +58,14 @@ public class Incidencias {
 
     public void setNombreartistico(String nombreartistico) {
         this.nombreartistico = nombreartistico;
+    }
+
+    public Date getFechacreacion() {
+        return fechacreacion;
+    }
+
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 
     public byte[] getFoto() {

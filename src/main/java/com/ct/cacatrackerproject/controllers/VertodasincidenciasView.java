@@ -24,7 +24,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VertodasincidenciasView {
     @FXML
@@ -35,6 +39,7 @@ public class VertodasincidenciasView {
     public Button volverButton;
     private String username;
     private int userId;
+    private List<Incidencias> incidenciasList;
 
     public void initialize(){
         username = UserSession.getInstance().getUsername();
@@ -58,7 +63,7 @@ public class VertodasincidenciasView {
             int responseCode = connection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) { // 404
-                System.out.println("Usuario no tiene incidencias registradas: " + userId);
+                System.out.println("Usuario no tiene incidenciasList registradas: " + userId);
                 return;
             }
 
@@ -79,26 +84,27 @@ public class VertodasincidenciasView {
             JsonNode jsonResponse = objectMapper.readTree(response.toString());
 
             if (jsonResponse.has("ERROR")) {
-                System.out.println("No incidencias found: " + jsonResponse.get("ERROR").asText());
+                System.out.println("No incidenciasList found: " + jsonResponse.get("ERROR").asText());
                 return;
             }
 
-            List<Incidencias> incidencias = objectMapper.readValue(
+            incidenciasList = objectMapper.readValue(
                     response.toString(),
                     objectMapper.getTypeFactory().constructCollectionType(List.class, Incidencias.class)
             );
 
-            if (incidencias.isEmpty()) {
-                System.out.println("No incidencias found, but it's fine.");
+            if (incidenciasList.isEmpty()) {
+                System.out.println("No incidenciasList found, but it's fine.");
                 return;
             }
 
-            for (Incidencias incidencia : incidencias) {
+            for (Incidencias incidencia : incidenciasList) {
                 Long incidenciaId = incidencia.getId();
                 System.out.println(incidenciaId);
                 String direccion = incidencia.getDireccion();
                 String codigoPostal = incidencia.getCodigopostal();
                 String nombreArtistico = incidencia.getNombreartistico();
+                Date fechaCreacion = incidencia.getFechacreacion();
                 byte[] fotoBytes = incidencia.getFoto();
 
                 HBox itemContainer = new HBox(10);
@@ -127,7 +133,12 @@ public class VertodasincidenciasView {
                 Text artistText = new Text("Nombre artístico: " + nombreArtistico);
                 artistText.setFont(Font.font("Arial Black", 16));
 
-                textContainer.getChildren().addAll(dirText, cpText, artistText);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = (fechaCreacion != null) ? sdf.format(fechaCreacion) : "No disponible";
+                Text fechaText = new Text("Fecha de creación: " + formattedDate);
+                fechaText.setFont(Font.font("Arial", 12));
+
+                textContainer.getChildren().addAll(dirText, cpText, artistText, fechaText);
 
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -140,6 +151,95 @@ public class VertodasincidenciasView {
             e.printStackTrace();
             showAlert("Error", "No se pudo cargar las incidencias desde el servidor.", Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    public void orderByDate(ActionEvent event) {
+        if (incidenciasList != null) {
+            incidenciasList = incidenciasList.stream()
+                    .sorted(Comparator.comparing(Incidencias::getFechacreacion, Comparator.nullsFirst(Comparator.naturalOrder())))
+                    .collect(Collectors.toList());
+
+            reorderIncidencias();
+        }
+    }
+
+    @FXML
+    public void orderByNombreArtistico(ActionEvent event) {
+        if (incidenciasList != null) {
+            incidenciasList = incidenciasList.stream()
+                    .sorted(Comparator.comparing(Incidencias::getNombreartistico, Comparator.nullsFirst(Comparator.naturalOrder())))
+                    .collect(Collectors.toList());
+
+            reorderIncidencias();
+        }
+    }
+
+    @FXML
+    public void orderByCodigoPostal(ActionEvent event) {
+        incidenciasList = incidenciasList.stream()
+                .sorted(Comparator.comparing(Incidencias::getCodigopostal,Comparator.nullsFirst(Comparator.naturalOrder())))
+                .collect(Collectors.toList());
+
+        reorderIncidencias();
+    }
+
+    private void reorderIncidencias() {
+
+        contenedorIncidencias.getChildren().clear();
+
+        for (Incidencias incidencia : incidenciasList) {
+            HBox itemContainer = createItemContainer(incidencia);
+            contenedorIncidencias.getChildren().add(itemContainer);
+        }
+    }
+
+    private HBox createItemContainer(Incidencias incidencia) {
+        Long incidenciaId = incidencia.getId();
+        String direccion = incidencia.getDireccion();
+        String codigoPostal = incidencia.getCodigopostal();
+        String nombreArtistico = incidencia.getNombreartistico();
+        Date fechaCreacion = incidencia.getFechacreacion();
+        byte[] fotoBytes = incidencia.getFoto();
+
+        HBox itemContainer = new HBox(10);
+        itemContainer.setStyle("-fx-border-color: #ddd; -fx-padding: 10px; -fx-background-color: #f9f9f9; -fx-border-radius: 5px;");
+        itemContainer.setAlignment(Pos.CENTER_LEFT);
+        itemContainer.setMaxWidth(Double.MAX_VALUE);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        if (fotoBytes != null) {
+            Image img = new Image(new ByteArrayInputStream(fotoBytes));
+            imageView.setImage(img);
+        } else {
+            imageView.setImage(new Image(getClass().getResource("/com/imagenes/SinFoto.jpg").toExternalForm()));
+        }
+
+        VBox textContainer = new VBox(5);
+
+        Text dirText = new Text("Dirección: " + direccion);
+        dirText.setFont(Font.font("Arial", 14));
+
+        Text cpText = new Text("Código Postal: " + codigoPostal);
+        cpText.setFont(Font.font("Arial", 12));
+
+        Text artistText = new Text("Nombre artístico: " + nombreArtistico);
+        artistText.setFont(Font.font("Arial Black", 16));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = (fechaCreacion != null) ? sdf.format(fechaCreacion) : "No disponible";
+        Text fechaText = new Text("Fecha de creación: " + formattedDate);
+        fechaText.setFont(Font.font("Arial", 12));
+
+        textContainer.getChildren().addAll(dirText, cpText, artistText, fechaText);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);       
+
+        itemContainer.getChildren().addAll(imageView, textContainer, spacer);
+        return itemContainer;
     }
 
     private void showAlert(String title, String content, Alert.AlertType alertType) {

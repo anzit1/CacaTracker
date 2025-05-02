@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -129,7 +130,8 @@ public class LoginpageView {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ct/cacatrackerproject/resetpassword-view.fxml"));
             AnchorPane root = fxmlLoader.load();
 
-            Scene scene = new Scene(root);
+             Scene scene = new Scene(root);
+
             scene.getRoot().requestFocus();
             Stage stage = (Stage) olvidePassButton.getScene().getWindow();
             stage.setScene(scene);
