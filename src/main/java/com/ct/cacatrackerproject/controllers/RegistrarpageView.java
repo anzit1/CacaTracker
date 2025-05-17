@@ -18,10 +18,6 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +52,7 @@ public class RegistrarpageView {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    private boolean checkCodigoPosta(String codigoPostal) {
+    private boolean checkCodigoPostal(String codigoPostal) {
         CheckCodigoPostal check = new CheckCodigoPostal();
         return check.cpValido(codigoPostal);
     }
@@ -97,7 +93,7 @@ public class RegistrarpageView {
             return;
         }
 
-        boolean bienCP = checkCodigoPosta(codigoPostal);
+        boolean bienCP = checkCodigoPostal(codigoPostal);
         if (!bienCP) {
             showAlert("Error en Código Postal.", "Código Postal incorrecto", "Ingrese un código válido de Alicante.");
             return;

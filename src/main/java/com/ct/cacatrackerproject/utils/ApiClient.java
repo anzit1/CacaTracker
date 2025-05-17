@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 public class ApiClient {
 
+    //private static final String BASE_URL = "https://8602-2a0c-5a82-150e-cf00-b8de-25a0-bab1-25e.ngrok-free.app/cacatrackerapi/rest";
     private static final String BASE_URL = "http://localhost:8080/cacatrackerapi/rest";
+    //private static final String BASE_URL = "http://cacatrackerapi.fly.dev/rest";
 
     public static String sendPostRequest(String endpoint, String jsonBody) throws IOException {
         try {

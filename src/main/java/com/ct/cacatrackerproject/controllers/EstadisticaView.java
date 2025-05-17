@@ -24,17 +24,12 @@ import java.util.List;
 
 public class EstadisticaView {
 
-    public BarChart barchart;
     public Text nombreUsuarioTxt;
     public Button volverButton;
-    public BarChart<String, Number> grafico;
     public Button calleAvTodos;
     public Button codPostalTodos;
     public Button calleAvTu;
     public Button codPostalTu;
-    public NumberAxis yAxis;
-    public CategoryAxis xAxis;
-    public Pane chartContainer;
     public AnchorPane anchorMain;
     public Pane graphContainer;
     private int userID;

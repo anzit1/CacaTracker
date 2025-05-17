@@ -7,17 +7,15 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="420.0" prefWidth="604.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ct.cacatrackerproject.controllers.LoginpageView">
-   <Pane prefHeight="120.0" prefWidth="601.0" style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;">
-      <children>
-         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="199.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../imagenes/Logo.png" />
-            </image>
-            <effect>
-               <Reflection fraction="0.32" topOpacity="0.18" />
-            </effect>
-         </ImageView>
-      </children>
+   <Pane prefHeight="120.0" prefWidth="601.0"
+         style="-fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6);;">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="199.0" layoutY="22.0" pickOnBounds="true"
+                 preserveRatio="true">
+         <effect>
+            <Reflection fraction="0.32" topOpacity="0.18"/>
+         </effect>
+         <Image url="@../../imagenes/Logo.png"/>
+      </ImageView>
    </Pane>
    <TextField fx:id="userInput" layoutX="176.0" layoutY="166.0" prefHeight="25.0" prefWidth="250.0" promptText="Usuario">
       <font>

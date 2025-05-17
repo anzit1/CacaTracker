@@ -39,10 +39,7 @@ public class VertusincidenciasView {
 
     @FXML
     private VBox contenedorIncidencias;
-
-    @FXML
-    private Button orderByDateButton;
-
+    private List<Incidencias> incidenciasList;
     private String username;
     private int userId;
 
@@ -52,8 +49,6 @@ public class VertusincidenciasView {
         nombreUsuarioTxt.setText("Usuario: " + username);
         cargarIncidencias();
     }
-
-    private List<Incidencias> incidenciasList;
 
     private void cargarIncidencias() {
         contenedorIncidencias.getChildren().clear();

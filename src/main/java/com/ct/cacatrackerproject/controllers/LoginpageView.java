@@ -24,6 +24,8 @@ import java.util.Map;
 public class LoginpageView {
 
     public Button olvidePassButton;
+    public Button registrarButton;
+    public Button salirButton;
     @FXML
     private Button loginButton;
 
@@ -105,7 +107,7 @@ public class LoginpageView {
 
             Scene scene = new Scene(root);
             scene.getRoot().requestFocus();
-            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Stage stage = (Stage) registrarButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

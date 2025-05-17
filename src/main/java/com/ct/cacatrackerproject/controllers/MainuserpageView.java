@@ -19,6 +19,9 @@ public class MainuserpageView {
 
     public Button crearIncidenciaButton;
     public Button estadisticasButton;
+    public Button tusIncidenciaButton;
+    public Button todasIncidenciaButton;
+
     @FXML
     private Text nombreUsuarioTxt;
 
@@ -57,7 +60,7 @@ public class MainuserpageView {
 
             Scene scene = new Scene(root);
             scene.getRoot().requestFocus();
-            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            Stage stage = (Stage) crearIncidenciaButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -72,7 +75,7 @@ public class MainuserpageView {
 
             Scene scene = new Scene(root);
             scene.getRoot().requestFocus();
-            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            Stage stage = (Stage) tusIncidenciaButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -102,7 +105,7 @@ public class MainuserpageView {
 
             Scene scene = new Scene(root);
             scene.getRoot().requestFocus();
-            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            Stage stage = (Stage) todasIncidenciaButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
